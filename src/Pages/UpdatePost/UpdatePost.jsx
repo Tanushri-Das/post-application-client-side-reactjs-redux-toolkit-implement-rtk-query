@@ -26,10 +26,13 @@ const UpdatePost = () => {
 
   const onSubmit = async (data) => {
     try {
-      await updatePost({ id: post._id, updatedPost: data });
-      toast.success("Post updated successfully");
-      refetchPost();
-      navigate("/posts");
+      const result = await updatePost({ id: post._id, updatedPost: data });
+      console.log(result);
+      if (result?.data?.modifiedCount > 0) {
+        toast.success("Post updated successfully");
+        refetchPost();
+        navigate("/posts");
+      }
     } catch (error) {
       toast.success("Post cannot updated successfully");
     }
